@@ -36,7 +36,9 @@ envcpt(data,minseglen=5,...,verbose=TRUE)
 	The default values for each function are used, except for the changepoint functions where multiple changes are identified and thus the PELT algorithm is used (see references or changepoint package for details).
 }
 \value{
-  \code{envcpt} outputs a list of 9 elements.  The first element is a 2x8 matrix where the first row contains the likelihood for each model fit and the second row contains the number of parameters fit in each model.  The 8 columns are for the 8 different models in the order above (headings given).  Elements 2-9 of the list are the fits for each individual model, these are the direct output from the respective functions so see the individual functions for formats.  The first model fit is in element 2 and the eighth model fit is in element 9.
+  \code{envcpt} outputs a list of 9 elements.  The first element is a 2x8 matrix where the first row contains the likelihood for each model fit and the second row contains the number of parameters fit in each model.  The 8 columns are for the 8 different models in the order above (headings given).  If any element is NA then there was an error fitting this type of model (typically the AR models and this implies nonstationarity).
+  
+  Elements 2-9 of the list are the fits for each individual model, these are the direct output from the respective functions so see the individual functions for formats.  The first model fit is in element 2 and the eighth model fit is in element 9, but are named for convenience.
 }
 \references{
 PELT Algorithm: Killick R, Fearnhead P, Eckley IA (2012) Optimal detection of changepoints with a linear computational cost, \emph{JASA} \bold{107(500)}, 1590--1598
@@ -61,6 +63,8 @@ out[[1]] # first row is twice the negative log-likelihood for each model
 aic.envcpt(out) # returns AIC for each model.
 which.min(aic.envcpt(out)) # gives meancpt (model 2) as the best model fit.
 out[[3]] # gives the model fit for the meancpt model.
+plot.fits.envcpt(out) # plots the fits
+plot.aic.envcpt(out) # plots the aic values
 
 set.seed(10)
 x=c(0.01*(1:100),1.5-0.02*((101:250)-101))+rnorm(250,0,0.2)
@@ -68,16 +72,18 @@ out=envcpt(x,minseglen=10) # run the 8 models with a minimum of 10 observations 
 aic.envcpt(out) # returns the AIC for each model
 which.min(aic.envcpt(out)) # gives trendcpt (model 6) as the best model fit.
 out[[7]] # gives the model fit for the trendcpt model.
+plot.fits.envcpt(out) # plots the fits
+plot.aic.envcpt(out) # plots the aic values
 
-set.seed(1)
-x=arima.sim(model=list(ar=0.6),n=100)+5
+set.seed(100)
+x=arima.sim(model=list(ar=0.8),n=100)+5
 out=envcpt(x) # run the 8 models with 
 aic.envcpt(out) # returns the AIC for each model
-which.min(aic.envcpt(out)) # gives meanarcpt (model 4) as the best model fit.
-out[[5]] # gives the model fit for the meanarcpt model (notice there are no changepoints).
-# The meanarcpt model and meanar model have different fits as the meanar model uses the default
-# method="CSS-ML" and thus does not return the same estimates as the meanarcpt function which uses
-# purely ML (based on the lm function).
+which.min(aic.envcpt(out)) # gives trendar (model 7) as the best model fit.
+out[[7]] # gives the model fit for the trendar model. Notice that the trend is tiny but does 
+# produce a significantly better fit than the meanar model.
+plot.fits.envcpt(out) # plots the fits
+plot.aic.envcpt(out) # plots the aic values
 }
 }
 

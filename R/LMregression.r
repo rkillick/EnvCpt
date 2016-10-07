@@ -328,13 +328,13 @@ multiple.reg.norm=function(data,mul.method="PELT",penalty="SIC",value=0,Q=5,clas
 	}
 }
 
-cpt.reg=function(data,penalty="MBIC",value=0,method="AMOC",dist="Normal",class=TRUE,param.estimates=TRUE,minseglen=3){
+cpt.reg=function(data,penalty="MBIC",pen.value=0,method="AMOC",dist="Normal",class=TRUE,param.estimates=TRUE,minseglen=3){
 	if(dist !="Normal"){ stop("Invalid distribution, must be Normal") }
 	if(method=="AMOC"){
-		return(single.reg.norm(data,penalty,value,class,param.estimates))
+		return(single.reg.norm(data,penalty,pen.value,class,param.estimates))
 	}
   else if(method=="PELT"){
-    return(multiple.reg.norm(data,mul.method="PELT",penalty,value,class=TRUE,param.estimates=param.estimates,minseglen=minseglen))
+    return(multiple.reg.norm(data,mul.method="PELT",penalty,pen.value,class=TRUE,param.estimates=param.estimates,minseglen=minseglen))
   }
 	else{
 		stop("Invalid Method, must be AMOC or PELT")

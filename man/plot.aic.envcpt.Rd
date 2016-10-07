@@ -1,29 +1,31 @@
-\name{aic.envcpt}
-\alias{aic.envcpt}
+\name{plot.aic.envcpt}
+\alias{plot.aic.envcpt}
 \title{
-Computes the AIC measure for output from the envcpt function.
+Barcharts the aic from each of the 8 models.
 }
 \description{
-Uses the likelihood and number of parameters from the output of the \code{envcpt} function and calculates the AIC measure for each model.
+Uses the output of the \code{envcpt} function and barcharts the aic from each of the 8 models, colouring in the minimum model.
 }
 \usage{
-aic.envcpt(object,...,k=2)
+plot.aic.envcpt(x,mar=c(4,8,1,1),yaxt='s',...)
 }
 \arguments{
-  \item{object}{
-	A list produced as output from the \code{envcpt} function.  In essence any list where the first element contains a matrix whose first row is twice the negative log-likelihood and second row is the number of parameters.  Columns are different models to compare.
+  \item{x}{
+	A list produced as output from the \code{envcpt} function.  In essence a list with the named elements: "mean","meancpt","meanar","meanarcpt","trend","trendcpt","trendar","trendarcpt" where each element is the output from the appropriate function call.
 }
-  \item{...}{Not used}
-  \item{k}{numeric, the penalty per parameter to be used: the default \code{k=2} is the classical AIC.}
+  \item{mar}{Numerical vector of margins (bottom, left, top, right) for the plot, see \code{\link[graphics]{par}} for further details.  Defaults give small margins around default content.}
+  \item{yaxt}{A character which specifies the y axis type, see \code{\link[graphics]{par}} for further details.  If you don't want the model labels then set \code{yaxt="n"} but don't forget to change the margins to account for this.}
+  \item{...}{Extra graphical parameters, passed to the original plot and the individual calls to \code{lines}}
 }
 \details{
-  Calculates the AIC defined as -2*<log-likelihood> + 2*<number of parameters>.  When comparing models the smaller the AIC the better the fit.
+  Uses the \code{\link{aic.envcpt}} function to calculate the AIC values for the \code{envcpt} output \code{x}.  Then barcharts the AIC values in the same order as the \code{\link{plot.fit.envcpt}} function.  The minimum AIC is the preferred model and this is highlight by a solid block.
+This is designed as an initial visualization tool for the AIC values only.
 }
 \value{
-  Vector of AIC values the same length as the number of columns in the first entry to the input list (length 8 if output from envcpt is used).  The column names from the envcpt output are preserved to give clear indication on models.
+  Returns the printed graphic to the active device.
 }
 \author{
-Simon Taylor and Rebecca Killick
+Rebecca Killick & Claudie Beaulieu.
 }
 
 

@@ -1,8 +1,11 @@
 envcpt=function(data,minseglen=5,...,verbose=TRUE){
   # 8 models: mean, mean+cpt, mean+AR, mean+AR+cpt, trend, trend+AR, trend+cpt, trend+AR+cpt
   # assume normal errors throughout
+  if(any(!complete.cases(data))){stop("data has missing values, this function cannot handle missing values")}
+  if(any(!is.numeric(data))){stop("data must be a numeric vector")}
+    
   if(verbose==TRUE){
-    print("Fitting 8 models")
+    message("Fitting 8 models")
     pb <- txtProgressBar(min = 0, max =8, style = 3)
   }
   # mean 
@@ -19,8 +22,8 @@ envcpt=function(data,minseglen=5,...,verbose=TRUE){
   
   # mean+AR
   # use logLik(auto.arima(data,d=0,D=0,seasonal=FALSE))
-  meanar.fit=try(arima(data,order=c(1,0,0),method="CSS-ML"))#function from stats
-  if(class(meanar.fit)=='try-error'){
+  meanar.fit=try(Arima(data,order=c(1,0,0),method="CSS-ML"))#function from stats
+  if(any(class(meanar.fit)=='try-error')){
     meanar.loglik=NA
   }
   else{meanar.loglik=-2*logLik(meanar.fit)}
@@ -29,9 +32,13 @@ envcpt=function(data,minseglen=5,...,verbose=TRUE){
   
   # mean+AR+cpt
   meanarcpt.fit=cpt.reg(cbind(data[-1],rep(1,length(data)-1),data[-length(data)]),method="PELT",minseglen=minseglen,...) # default MBIC penalty
-  meanarcpt.loglik=logLik(meanarcpt.fit)[1] # function from changepoint
-  # gives -2*log likelihood
-  # replace with faster version
+  if(ncpts(meanarcpt.fit)==0){meanarcpt.loglik=meanar.loglik}
+  # used as cpt fit is not the same as no cpt fit due to regression not using the first data
+  else{
+    meanarcpt.loglik=logLik(meanarcpt.fit)[1] # function from changepoint
+    # gives -2*log likelihood
+  }
+  # replace with faster version (maybe trimmed version of auto.arima instead of lm)
   if(verbose==TRUE){setTxtProgressBar(pb, 4)}
   
   # trend
@@ -42,9 +49,13 @@ envcpt=function(data,minseglen=5,...,verbose=TRUE){
   
   # trend+cpt
   trendcpt.fit=cpt.reg(cbind(data,rep(1,length(data)),1:length(data)),method='PELT',minseglen=minseglen,...) # default MBIC penalty
-  trendcpt.loglik=logLik(trendcpt.fit)[1] # function from changepoint
-  # gives -2*log likelihood
+  if(ncpts(trendcpt.fit)==0){trendcpt.loglik=trend.loglik}
+  else{
+    trendcpt.loglik=logLik(trendcpt.fit)[1] # function from changepoint
+    # gives -2*log likelihood
+  }
   if(verbose==TRUE){setTxtProgressBar(pb, 6)}
+  # get working in C
   
   # trend+AR
   trendar.fit=lm(data[-1]~c(1:(length(data)-1))+data[-length(data)]) # function from stats
@@ -54,9 +65,13 @@ envcpt=function(data,minseglen=5,...,verbose=TRUE){
   
   # trend+AR+cpt
   trendarcpt.fit=cpt.reg(cbind(data[-1],rep(1,length(data)-1),1:(length(data)-1),data[-length(data)]),method="PELT",minseglen=minseglen,...) # default MBIC penalty
-  trendarcpt.loglik=logLik(trendarcpt.fit)[1] # function from changepoint
-  # gives -2*log likelihood
-  # replace with faster version
+  if(ncpts(trendarcpt.fit)==0){trendarcpt.loglik=trendar.loglik}
+  # used as cpt fit is not the same as no cpt fit due to regression not using the first data
+  else{
+    trendarcpt.loglik=logLik(trendarcpt.fit)[1] # function from changepoint
+    # gives -2*log likelihood
+  }
+  # replace with faster version, maybe trimmed auto.arima instead of lm
   if(verbose==TRUE){setTxtProgressBar(pb, 8)}
   
   out=list()
@@ -74,6 +89,7 @@ envcpt=function(data,minseglen=5,...,verbose=TRUE){
   out[[7]]=trendcpt.fit
   out[[8]]=trendar.fit
   out[[9]]=trendarcpt.fit
+  names(out)=c("summary","mean","meancpt","meanar","meanarcpt","trend","trendcpt","trendar","trendarcpt")
   if(verbose==TRUE){close(pb)}
   return(out)
 }
