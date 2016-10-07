@@ -19,7 +19,7 @@ test_that("envcpt5",expect_equivalent(cpts(out[[3]]),100))
 test_that("envcpt5plot",expect_silent(plot.fit.envcpt(out)))
 test_that("envcpt5aicplot",expect_silent(plot.aic.envcpt(out)))
 
-test_that("messages1",expect_messages(envcpt(x),"Fitting 8 models"))
+test_that("messages1",expect_message(envcpt(x),"Fitting 8 models"))
 
 
 
@@ -40,7 +40,7 @@ test_that("envcpt9",expect_equivalent(cpts(out[[7]]),100))
 test_that("envcpt9plot",expect_silent(plot.fit.envcpt(out)))
 test_that("envcpt9aicplot",expect_silent(plot.aic.envcpt(out)))
 
-test_that("messages2",expect_messages(envcpt(x),"Fitting 8 models"))
+test_that("messages2",expect_message(envcpt(x),"Fitting 8 models"))
 
 
 
@@ -61,7 +61,7 @@ test_that("envcpt13",expect_equivalent(out[[8]]$coefficients, c(2.538210310,-0.0
 test_that("envcpt13plot",expect_silent(plot.fit.envcpt(out)))
 test_that("envcpt13aicplot",expect_silent(plot.aic.envcpt(out)))
 
-test_that("messages3",expect_messages(envcpt(x),"Fitting 8 models"))
+test_that("messages3",expect_message(envcpt(x),"Fitting 8 models"))
 
 
 
