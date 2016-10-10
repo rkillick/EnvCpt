@@ -91,5 +91,6 @@ envcpt=function(data,minseglen=5,...,verbose=TRUE){
   out[[9]]=trendarcpt.fit
   names(out)=c("summary","mean","meancpt","meanar","meanarcpt","trend","trendcpt","trendar","trendarcpt")
   if(verbose==TRUE){close(pb)}
+  class(out)="envcpt"
   return(out)
 }
