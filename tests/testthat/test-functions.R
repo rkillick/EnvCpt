@@ -4,13 +4,13 @@
 context("function tests")
 
 # plot.envcpt
-set.seed(98135)
-x=rnorm(50)
-out=envcpt(x)
-test_that("plotAIC xlim main", expect_silent(plot(out,type='aic',xlim=c(0,10),main="AIC Test")))
-test_that("plotAIC xlim main", expect_silent(plot(out,type='aic',main="AIC Test")))
-test_that("plotAIC xlim main", expect_silent(plot(out,type='aic',xlim=c(0,10))))
-
+if (!identical(Sys.getenv("NOT_CRAN"), "true")) {
+  set.seed(98135)
+  x=rnorm(50)
+  out=envcpt(x)
+test_that("plotAIC xlim main",expect_silent(plot(out,type='aic',xlim=c(0,10),main="AIC Test")))
+test_that("plotAIC xlim main",expect_silent(plot(out,type='aic',main="AIC Test")))
+test_that("plotAIC xlim main",expect_silent(plot(out,type='aic',xlim=c(0,10))))
 
 # envcpt
 test_that("no messages",expect_message(envcpt(x,verbose=FALSE),NA))
@@ -20,6 +20,7 @@ test_that("NA data",expect_error(envcpt(x),"data has missing values, this functi
 
 x=LETTERS
 test_that("non-numeric",expect_error(envcpt(x),"data must be a numeric vector"))
+}
 
 
 

@@ -1,8 +1,8 @@
 Package: EnvCpt
 Type: Package
-Title: Detection of structural changes in Climate and Environment time series
-Version: 0.1
-Date: 2016-05-26
+Title: Detection of Structural Changes in Climate and Environment Time Series
+Version: 0.1.1
+Date: 2016-10-11
 Authors@R: c(person("Rebecca", "Killick", role=c("aut","cre"),email="r.killick@lancs.ac.uk"),
 	person("Claudie", "Beaulieu", role="aut"), person("Simon", "Taylor", role="aut"))
 Maintainer: Rebecca Killick <r.killick@lancs.ac.uk>
@@ -22,4 +22,4 @@ Suggests:
     testthat
 License: GPL
 LazyLoad: yes
-Packaged: 2016-05-26 12:36:29 UTC; killick
+Packaged: 2016-10-11 12:36:29 UTC; killick

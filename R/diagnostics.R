@@ -99,20 +99,29 @@ plot.envcpt=function(x,type=c('fit','aic'),lwd=3,...){
     col[which.min(aic)]=colors[c(8,3,7,4,5,2,6,1)][which.min(aic)]
     
     xlim=c(min(aic)-0.1*diff(range(aic)),max(aic)+0.1*diff(range(aic)))
-    if(!("yaxt"%in%names(extra.args))){extra.args$yaxt='n'}
     if(("xlim"%in%names(extra.args))&("main"%in%names(extra.args))){
-      barplot(aic[c(1,3,5,7,2,4,6,8)],yaxt=extra.args$yaxt,ylab="",horiz=TRUE,ylim=c(-1,9.5),border=c(colors[c(8,7,5,6,3,4,2,1)]),col=col[c(1,3,5,7,2,4,6,8)],xlab='<--  More likely      Less likely  -->',xpd=FALSE,...)
+      barplot(aic[c(1,3,5,7,2,4,6,8)],yaxt='n',ylab="",horiz=TRUE,ylim=c(-1,9.5),border=c(colors[c(8,7,5,6,3,4,2,1)]),col=col[c(1,3,5,7,2,4,6,8)],xlab='<--  More likely      Less likely  -->',xpd=FALSE,...)
     }
     else if("xlim"%in%names(extra.args)){
-      barplot(aic[c(1,3,5,7,2,4,6,8)],yaxt=extra.args$yaxt,ylab="",horiz=TRUE,ylim=c(-1,9.5),border=c(colors[c(8,7,5,6,3,4,2,1)]),col=col[c(1,3,5,7,2,4,6,8)],xlab='<--  More likely      Less likely  -->',xpd=FALSE,main="AIC",...)
+      barplot(aic[c(1,3,5,7,2,4,6,8)],yaxt='n',ylab="",horiz=TRUE,ylim=c(-1,9.5),border=c(colors[c(8,7,5,6,3,4,2,1)]),col=col[c(1,3,5,7,2,4,6,8)],xlab='<--  More likely      Less likely  -->',xpd=FALSE,main="AIC",...)
     }
     else if("main"%in%names(extra.args)){
-      barplot(aic[c(1,3,5,7,2,4,6,8)],yaxt=extra.args$yaxt,ylab="",horiz=TRUE,ylim=c(-1,9.5),border=c(colors[c(8,7,5,6,3,4,2,1)]),col=col[c(1,3,5,7,2,4,6,8)],xlab='<--  More likely      Less likely  -->',xpd=FALSE,xlim=xlim,...)
+      barplot(aic[c(1,3,5,7,2,4,6,8)],yaxt='n',ylab="",horiz=TRUE,ylim=c(-1,9.5),border=c(colors[c(8,7,5,6,3,4,2,1)]),col=col[c(1,3,5,7,2,4,6,8)],xlab='<--  More likely      Less likely  -->',xpd=FALSE,xlim=xlim,...)
     }
     else{
-      barplot(aic[c(1,3,5,7,2,4,6,8)],yaxt=extra.args$yaxt,ylab="",horiz=TRUE,ylim=c(-1,9.5),border=c(colors[c(8,7,5,6,3,4,2,1)]),col=col[c(1,3,5,7,2,4,6,8)],xlab='<--  More likely      Less likely  -->',xpd=FALSE,xlim=xlim,main="AIC",...)
+      barplot(aic[c(1,3,5,7,2,4,6,8)],yaxt='n',ylab="",horiz=TRUE,ylim=c(-1,9.5),border=c(colors[c(8,7,5,6,3,4,2,1)]),col=col[c(1,3,5,7,2,4,6,8)],xlab='<--  More likely      Less likely  -->',xpd=FALSE,xlim=xlim,main="AIC",...)
     }
-    if(extra.args$yaxt!='n'){
+    if("yaxt"%in%names(extra.args)){
+      if(extra.args$yaxt!='n'){
+        labels=c("Mean","Mean + AR(1)","Trend","Trend + AR(1)","Mean cpt","Mean cpt + AR(1)","Trend cpt","Trend cpt + AR(1)")
+        if(ncpts(x$meancpt)==0){labels[5]="Mean cpt*"}
+        if(ncpts(x$meanarcpt)==0){labels[6]="Mean cpt + AR(1)*"}
+        if(ncpts(x$trendcpt)==0){labels[7]="Trend cpt*"}
+        if(ncpts(x$trendarcpt)==0){labels[8]="Trend cpt + AR(1)*"}
+        axis(2,at=seq(0.75,9,len=8),labels=labels,las=1)
+      }
+    }
+    else{
       labels=c("Mean","Mean + AR(1)","Trend","Trend + AR(1)","Mean cpt","Mean cpt + AR(1)","Trend cpt","Trend cpt + AR(1)")
       if(ncpts(x$meancpt)==0){labels[5]="Mean cpt*"}
       if(ncpts(x$meanarcpt)==0){labels[6]="Mean cpt + AR(1)*"}
