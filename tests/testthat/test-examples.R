@@ -1,7 +1,7 @@
 context("man file example tests")
 
 # From envcpt.Rd & plot.fit.envcpt.Rd (same examples)
-if (!identical(Sys.getenv("NOT_CRAN"), "true")) {
+if(identical(Sys.getenv("NOT_CRAN"), "true")) {
   set.seed(1)
   x=c(rnorm(100,0,1),rnorm(100,5,1))
   out=envcpt(x) # run the 8 models with default values
@@ -28,7 +28,7 @@ if (!identical(Sys.getenv("NOT_CRAN"), "true")) {
 
 
 
-if (!identical(Sys.getenv("NOT_CRAN"), "true")) {
+if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   set.seed(10)
   x=c(0.01*(1:100),1.5-0.02*((101:250)-101))+rnorm(250,0,0.2)
   out=envcpt(x,minseglen=10) # run the 8 models with a minimum of 10 observations between changes
@@ -52,7 +52,7 @@ test_that("messages2",expect_message(envcpt(x),"Fitting 8 models"))
 
 
 
-if (!identical(Sys.getenv("NOT_CRAN"), "true")) {
+if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   set.seed(100)
   x=arima.sim(model=list(ar=0.8),n=100)+5
   out=envcpt(x) # run the 8 models with 

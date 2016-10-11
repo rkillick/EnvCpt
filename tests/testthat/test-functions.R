@@ -4,7 +4,7 @@
 context("function tests")
 
 # plot.envcpt
-if (!identical(Sys.getenv("NOT_CRAN"), "true")) {
+if (identical(Sys.getenv("NOT_CRAN"), "true")) {
   set.seed(98135)
   x=rnorm(50)
   out=envcpt(x)
