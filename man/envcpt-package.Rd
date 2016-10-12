@@ -6,7 +6,7 @@
 Detection of Structural Changes in Climate and Environment Time Series
 }
 \description{
-Tools for automatic model selection and diagnostics for Climate and Environmental data.  In particular the envcpt function does automatic model selection between a variety of trend, changepoint and autocorrelation models.  The envcpt function should be your first port of call.
+Tools for automatic model selection and diagnostics for Climate and Environmental data.  In particular the \code{envcpt()} function does automatic model selection between a variety of trend, changepoint and autocorrelation models.  The \code{envcpt()} function should be your first port of call.
 }
 \details{
 \tabular{ll}{
