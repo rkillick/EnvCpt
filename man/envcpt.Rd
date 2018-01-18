@@ -4,7 +4,7 @@
 Assesses whether an environmental time series contains trend, autocorrelation and/or changes
 }
 \description{
-Evaluates 8 different models (see details) and returns the model fits as well as a summary of the likelihood for each model.
+Evaluates 12 different models (see details) and returns the model fits as well as a summary of the likelihood for each model.
 }
 \usage{
 envcpt(data,minseglen=5,...,verbose=TRUE)
@@ -20,25 +20,29 @@ envcpt(data,minseglen=5,...,verbose=TRUE)
   Additional arguments to pass to the changepoint functions, if none are specified defaults with PELT multiple changepoint algorithm are used. See \code{\link[changepoint]{cpt.meanvar}} for options.
 }
   \item{verbose}{
-  If TRUE (default), prints to the console an progress bar indicating progression through the fit of the 8 models.
+  If TRUE (default), prints to the console an progress bar indicating progression through the fit of the 12 models.
 }
 }
 \details{
-	This function is used to automatically fit 8 different models all with Normal distribution for errors:
+	This function is used to automatically fit 12 different models all with Normal distribution for errors:
 	1. A constant mean and variance (using \code{\link[MASS]{fitdistr}})
 	2. A piecewise constant mean and variance (using \code{\link[changepoint]{cpt.meanvar}})
 	3. A constant mean with AR (1) errors (using \code{\link[forecast]{auto.arima}})
-	4. A piecewise constant mean with AR(1) errors (using \code{cpt.reg} in this package - not exported)
-	5. A linear trend over time (using \code{\link[stats]{lm}})
-	6. A piecewise linear trend over time (using \code{cpt.reg} in this package - not exported)
-	7. A linear trend over time with AR(1) errors (using \code{\link[stats]{lm}})
-	8. A piecewise linear trend over time with AR(1) errors (using \code{cpt.reg} in this package - not exported)
+	4. A constant mean with AR (2) errors (using \code{\link[forecast]{auto.arima}})
+	5. A piecewise constant mean with AR(1) errors (using \code{cpt.reg} in this package - not exported)
+	6. A piecewise constant mean with AR(2) errors (using \code{cpt.reg} in this package - not exported)
+	7. A linear trend over time (using \code{\link[stats]{lm}})
+	8. A piecewise linear trend over time (using \code{cpt.reg} in this package - not exported)
+	9. A linear trend over time with AR(1) errors (using \code{\link[stats]{lm}})
+	10. A linear trend over time with AR(2) errors (using \code{\link[stats]{lm}})
+	11. A piecewise linear trend over time with AR(1) errors (using \code{cpt.reg} in this package - not exported)
+	12. A piecewise linear trend over time with AR(2) errors (using \code{cpt.reg} in this package - not exported)
 	The default values for each function are used, except for the changepoint functions where multiple changes are identified and thus the PELT algorithm is used (see references or changepoint package for details).
 }
 \value{
-  \code{envcpt} outputs a list of 9 elements.  The first element is a 2x8 matrix where the first row contains the likelihood for each model fit and the second row contains the number of parameters fit in each model.  The 8 columns are for the 8 different models in the order above (headings given).  If any element is NA then there was an error fitting this type of model (typically the AR models and this implies nonstationarity).
+  \code{envcpt} outputs a list of 13 elements.  The first element is a 2x8 matrix where the first row contains the likelihood for each model fit and the second row contains the number of parameters fit in each model.  The 12 columns are for the 12 different models in the order above (headings given).  If any element is NA then there was an error fitting this type of model (typically the AR models and this implies nonstationarity).
   
-  Elements 2-9 of the list are the fits for each individual model, these are the direct output from the respective functions so see the individual functions for formats.  The first model fit is in element 2 and the eighth model fit is in element 9, but are named for convenience.
+  Elements 2-13 of the list are the fits for each individual model, these are the direct output from the respective functions so see the individual functions for formats.  The first model fit is in element 2 and the twelth model fit is in element 13, but are named for convenience.
 }
 \references{
 PELT Algorithm: Killick R, Fearnhead P, Eckley IA (2012) Optimal detection of changepoints with a linear computational cost, \emph{JASA} \bold{107(500)}, 1590--1598

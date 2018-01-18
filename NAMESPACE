@@ -1,3 +1,4 @@
+useDynLib(EnvCpt)
 import(methods)
 import(graphics)
 import(forecast)
@@ -12,3 +13,4 @@ export("envcpt")
 
 S3method(plot,envcpt)
 S3method(AIC,envcpt)
+
