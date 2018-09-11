@@ -3,6 +3,7 @@ sudo: required
 warnings_are_errors: true
 r_check_revdep: false
 r:
+  - 3.3
   - release
   - devel
 
