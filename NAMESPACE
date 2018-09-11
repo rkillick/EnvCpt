@@ -1,16 +1,18 @@
 useDynLib(EnvCpt)
 import(methods)
 import(graphics)
-import(forecast)
 importFrom(MASS,fitdistr)
 import(changepoint)
 importFrom(utils, txtProgressBar,setTxtProgressBar)
-importFrom(stats, AIC,lm,is.ts,ts, var, complete.cases, fitted.values)
+importFrom(stats, arima,AIC,BIC,lm,is.ts,ts, var, complete.cases, fitted.values)
 importFrom(zoo, index, coredata)
 importFrom(grDevices, rainbow)
 
 export("envcpt")
+export("AICweights")
 
 S3method(plot,envcpt)
 S3method(AIC,envcpt)
-
+S3method(BIC,envcpt)
+S3method(AICweights,envcpt)
+S3method(AICweights,default)

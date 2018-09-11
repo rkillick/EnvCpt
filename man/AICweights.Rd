@@ -1,41 +1,33 @@
-\name{EnvCpt-package}
-\alias{EnvCpt-package}
-\alias{EnvCpt}
-\docType{package}
+\name{AICweights}
+\alias{AICweights.envcpt}
+\alias{AICweights}
 \title{
-Detection of Structural Changes in Climate and Environment Time Series
+Computes the AIC weights for output from the envcpt function.
 }
 \description{
-Tools for automatic model selection and diagnostics for Climate and Environmental data.  In particular the \code{envcpt()} function does automatic model selection between a variety of trend, changepoint and autocorrelation models.  The \code{envcpt()} function should be your first port of call.
+Uses the likelihood and number of parameters from the output of the \code{envcpt} function and calculates the AICweights for each model fitted relative to the model with the minimum AIC.
+}
+\usage{
+\method{AICweights}{envcpt}(object)
+}
+\arguments{
+  \item{object}{
+	A list produced as output from the \code{envcpt} function.  In essence any list where the first element contains a matrix whose first row is twice the negative log-likelihood and second row is the number of parameters.  Columns are different models to compare.
+}
 }
 \details{
-\tabular{ll}{
-Package: \tab EnvCpt\cr
-Type: \tab Package\cr
-Version: \tab 1.1 \cr
-Date: \tab 2018-09-11\cr
-License: \tab GPL\cr
-LazyLoad: \tab yes\cr
+  Calculates the AICweights defined as \deqn{w_i=\frac{\exp{-0.5 \Delta_i}}{\sum_r{\exp{-0.5\Delta_r}}}}{w_i=exp(-0.5 \Delta_i)  /  \sum exp(-0.5\Delta_r)} where the summation over \eqn{r} is across all models considered and \eqn{\Delta_i} is the difference between the AIC value for model \eqn{i} and the best model.
 }
-
+\value{
+  Vector of AICweights the same length as the number of columns in the first entry to the input list (length 12 if output from envcpt where all models are considered).  The column names from the envcpt output are preserved to give clear indication on models.
 }
 \author{
-Rebecca Killick <r.killick@lancs.ac.uk>, Claudie Beaulieu <c.beaulieu@soton.ac.uk>, Simon Taylor <s.taylor2@lancs.ac.uk>, Harjit Hullait <h.hullait@lancs.ac.uk>.
-
-Maintainer: Rebecca Killick <r.killick@lancs.ac.uk>
+Rebecca Killick
 }
 
-\references{
-EnvCpt Algorithm: Beaulieu, C, Killick, R (2018+) Distinguishing trends and shifts from memory in climate data. 
 
-PELT Algorithm: Killick R, Fearnhead P, Eckley IA (2012) Optimal detection of changepoints with a linear computational cost, \emph{JASA} \bold{107(500)}, 1590--1598
-}
-\keyword{changepoint}
-\keyword{segmentation}
-\keyword{environment}
-\keyword{climate}
 \seealso{
-\code{\link{envcpt}},\code{\link{AIC.envcpt}},\code{\link{plot.envcpt}}
+\code{\link{envcpt}}
 }
 \examples{
 \dontrun{
@@ -82,3 +74,7 @@ plot(out,type="aic") # plots the aic values
 plot(out,type="bic") # plots the bic values
 }
 }
+
+\keyword{methods}
+\keyword{univar}
+\keyword{models}

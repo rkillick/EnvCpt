@@ -2,21 +2,18 @@ Package: EnvCpt
 Type: Package
 Title: Detection of Structural Changes in Climate and Environment Time
         Series
-Version: 1.0
-Date: 2018-01-18
+Version: 1.1
+Date: 2018-09-11
 Authors@R: c(person("Rebecca", "Killick", role=c("aut","cre"),email="r.killick@lancs.ac.uk"),
 	person("Claudie", "Beaulieu", role="aut"), person("Simon", "Taylor", role="aut"),person("Harjit","Hullait",role="aut"))
 Maintainer: Rebecca Killick <r.killick@lancs.ac.uk>
 URL: https://github.com/rkillick/EnvCpt/
 Description: Tools for automatic model selection and diagnostics for Climate and Environmental data.  In particular the envcpt() function does automatic model selection between a variety of trend, changepoint and autocorrelation models.  The envcpt() function should be your first port of call.
-Depends: R(>= 3.3), changepoint(>= 2.2.2), forecast, grDevices, MASS,
+Depends: R(>= 3.3), changepoint(>= 2.2.2), grDevices, MASS,
         methods, stats, utils, zoo
 Suggests: testthat
 License: GPL
 LazyLoad: yes
-Packaged: 2018-01-18 13:46:06 UTC; killick
+Packaged: 2018-06-01 13:46:06 UTC; killick
 NeedsCompilation: yes
-Author: Rebecca Killick [aut, cre],
-  Claudie Beaulieu [aut],
-  Simon Taylor [aut],
-  Harjit Hullait [aut]
+

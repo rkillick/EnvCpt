@@ -1,3 +1,15 @@
+Version 1.1
+===========
+Changes to previous version
+
+* Added option to envcpt to choose a subset of models to run.
+* The subset selection also follows through to plotting whereby only the models fitted are plotted.
+* BIC method added.
+* AICweights function added to calculate the AIC weights for the models fitted.
+* Removed dependency on forecast package in favour of directly using arima function from stats package. (slimming reverse dependencies)
+* Added new tests for the new functionality
+* Added EnvCpt paper to references
+
 Version 1.0
 =============
 Changes to previous version
