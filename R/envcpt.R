@@ -56,8 +56,11 @@ envcpt=function(data,models=c("mean","meancpt","meanar1","meanar2","meanar1cpt",
   # mean+AR1+cpt
   if(any(models=="meanar1cpt")|any(models==5)){
     meanarcpt.fit=cpt.reg(cbind(data[-1],rep(1,n-1),data[-n]),method="PELT",minseglen=minseglen,...) # default MBIC penalty
-    if(ncpts(meanarcpt.fit)==0){meanarcpt.loglik=meanar.loglik}
+    if(ncpts(meanarcpt.fit)==0){
+      if(any(models=="meanar1")|any(models==3)){meanarcpt.loglik=meanar.loglik}
+      else{meanarcpt.loglik=logLik(meanarcpt.fit)[1]} # function from changepoint
     # used as cpt fit is not the same as no cpt fit due to regression not using the first data
+    }
     else{
       meanarcpt.loglik=logLik(meanarcpt.fit)[1] # function from changepoint
       # gives -2*log likelihood
@@ -70,8 +73,11 @@ envcpt=function(data,models=c("mean","meancpt","meanar1","meanar2","meanar1cpt",
   # mean+AR2+cpt
   if(any(models=="meanar2cpt")|any(models==6)){
     meanar2cpt.fit=cpt.reg(cbind(data[-c(1:2)],rep(1,n-2),data[2:(n-1)],data[1:(n-2)]),method="PELT",minseglen=minseglen,...) # default MBIC penalty
-    if(ncpts(meanar2cpt.fit)==0){meanar2cpt.loglik=meanar.loglik}
+    if(ncpts(meanar2cpt.fit)==0){
+      if(any(models=="meanar2")|any(models==4)){meanar2cpt.loglik=meanar.loglik}
+      else{meanar2cpt.loglik=logLik(meanar2cpt.fit)[1]} # function from changepoint
     # used as cpt fit is not the same as no cpt fit due to regression not using the first data
+    }
     else{
       meanar2cpt.loglik=logLik(meanar2cpt.fit)[1] # function from changepoint
       # gives -2*log likelihood
@@ -93,7 +99,10 @@ envcpt=function(data,models=c("mean","meancpt","meanar1","meanar2","meanar1cpt",
   # trend+cpt
   if(any(models=="trendcpt")|any(models==8)){
     trendcpt.fit=cpt.reg(cbind(data,rep(1,n),1:n),method='PELT',minseglen=minseglen,...) # default MBIC penalty
-    if(ncpts(trendcpt.fit)==0){trendcpt.loglik=trend.loglik}
+    if(ncpts(trendcpt.fit)==0){
+      if(any(models=="trend")|any(models==7)){trendcpt.loglik=trend.loglik}
+      else{trendcpt.loglik=logLik(trendcpt.fit)[1]} # function from changepoint
+    }
     else{
       trendcpt.loglik=logLik(trendcpt.fit)[1] # function from changepoint
       # gives -2*log likelihood
@@ -123,8 +132,11 @@ envcpt=function(data,models=c("mean","meancpt","meanar1","meanar2","meanar1cpt",
   # trend+AR1+cpt
   if(any(models=="trendar1cpt")|any(models==11)){
     trendarcpt.fit=cpt.reg(cbind(data[-1],rep(1,n-1),1:(n-1),data[-n]),method="PELT",minseglen=minseglen,...) # default MBIC penalty
-    if(ncpts(trendarcpt.fit)==0){trendarcpt.loglik=trendar.loglik}
+    if(ncpts(trendarcpt.fit)==0){
+      if(any(models=="trendar1")|any(models==9)){trendarcpt.loglik=trendar.loglik}
+      else{trendarcpt.loglik=logLik(trendarcpt.fit)[1]} # function from changepoint
     # used as cpt fit is not the same as no cpt fit due to regression not using the first data
+    }
     else{
       trendarcpt.loglik=logLik(trendarcpt.fit)[1] # function from changepoint
       # gives -2*log likelihood
@@ -137,8 +149,11 @@ envcpt=function(data,models=c("mean","meancpt","meanar1","meanar2","meanar1cpt",
   # trend+AR2+cpt
   if(any(models=="trendar2cpt")|any(models==12)){
     trendar2cpt.fit=cpt.reg(cbind(data[-c(1:2)],rep(1,n-2),1:(n-2),data[2:(n-1)],data[1:(n-2)]),method="PELT",minseglen=minseglen,...) # default MBIC penalty
-    if(ncpts(trendar2cpt.fit)==0){trendar2cpt.loglik=trendar2.loglik}
+    if(ncpts(trendar2cpt.fit)==0){
+      if(any(models=="trendar2")|any(models==10)){trendar2cpt.loglik=trendar2.loglik}
+      else{trendar2cpt.loglik=logLik(trendar2cpt.fit)[1]} # function from changepoint
     # used as cpt fit is not the same as no cpt fit due to regression not using the first data
+    }
     else{
       trendar2cpt.loglik=logLik(trendar2cpt.fit)[1] # function from changepoint
       # gives -2*log likelihood

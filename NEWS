@@ -1,3 +1,9 @@
+Version 1.1.1
+=============
+Changes to previous version
+
+* Fixed bug in envcpt function that meant that if a non-changepoint model was not specified in the list of models to fit, and no changepoints were detected in the changepoint model then the log-likelihood was recorded in the output as NA instead of the value fitted.
+
 Version 1.1
 ===========
 Changes to previous version
