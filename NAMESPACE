@@ -1,4 +1,3 @@
-useDynLib(EnvCpt)
 import(methods)
 import(graphics)
 importFrom(MASS,fitdistr)
