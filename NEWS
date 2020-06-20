@@ -1,3 +1,9 @@
+Version 1.1.2
+=============
+Changes to previous version
+
+* Fixed bug in the plot function that meant that the fit was calculated for each model as "scaled data - residuals" instead of "data-residuals".  This bug crept in version 1.1 when the subset code was added.  Thanks to Claudie Beaulieu and collaborators for spotting it.
+
 Version 1.1.1
 =============
 Changes to previous version

@@ -70,13 +70,11 @@ plot.envcpt=function(x,type=c('fit','bic','aic'),lwd=3,...,data=NA){
     else if(any(models==12)){data=data.set(x$trendar2cpt)[,1];data=c(data[1:2],data)}
     else if(is.na(data)){stop("No changepoint models fit so no dataset is identifiable.  Please provide the data argument so the fits can be plotted.")}
     
-    data=(data-min(data))/diff(range(data)) # scales to [0,1]
-    
     plot(1:length(data),type='n',yaxt='n',ylim=c(0,length(models)+1),ylab="",...)
     # axis(2,at=seq(0.5,length(models)+0.5,by=1),labels=c("Data","Mean","Mean + AR(1)","Mean + AR(2)","Trend","Trend + AR(1)","Trend + AR(2)","Mean cpt","Mean cpt + AR(1)","Mean cpt + AR(2)","Trend cpt","Trend cpt + AR(1)","Trend cpt + AR(2)")[c(1,models+1)],col=c("black",colors[c(8,7,5,6,3,4,2,1,1,1,1,1)]),las=1)
     
     # get the data and fitted values for each of the models and scale to be within 0-1
-    lines(data,col='black',lwd=lwd,...)
+    lines((data-min(data))/diff(range(data)),col='black',lwd=lwd,...)
     axis(2,at=seq(0.5,length(models)+0.5,by=1),labels=c("Data",rep("",12))[c(1,plot.order+1)],col=c("black",colors[c(8,7,5,6,3,4,2,1,1,1,1,1)]),las=1)
     offset=1
     
