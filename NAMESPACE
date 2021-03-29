@@ -6,7 +6,7 @@ import(changepoint)
 importFrom(utils, txtProgressBar,setTxtProgressBar)
 importFrom(stats, arima,AIC,BIC,lm,is.ts,ts, var, complete.cases, fitted.values)
 importFrom(zoo, index, coredata)
-importFrom(grDevices, rainbow)
+importFrom(grDevices, rainbow,col2rgb)
 
 export("envcpt")
 export("AICweights")

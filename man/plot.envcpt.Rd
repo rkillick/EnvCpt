@@ -7,7 +7,7 @@ Plots optionally either ("fit") the data and fits from each of the 8 models or (
 Uses the output of the \code{envcpt} function and plots optionally ("fit") the original data and the fit from each of the 8 models or ("aic") the aic for each of the 8 models.
 }
 \usage{
-\method{plot}{envcpt}(x,type=c('fit','bic','aic'),lwd=3,...,data=NA)
+\method{plot}{envcpt}(x,type=c('fit','bic','aic'),lwd=3,colors=rainbow(12),...,data=NA)
 }
 \arguments{
   \item{x}{
@@ -15,6 +15,7 @@ Uses the output of the \code{envcpt} function and plots optionally ("fit") the o
 }
   \item{type}{character vector. \code{fit} returns a plot of the data and fitted models. \code{aic} returns a bar chart of the aic values for each of the 8 models}
   \item{lwd}{Line width graphical parameter, see \code{\link[graphics]{par}} for further details.}
+  \item{colors}{colors for the individual models to be passed to the plotting functions.  Note that this must be of length 12 regardless of how many models were evaluated.  Color validity is checked using col2rgb.}
   \item{...}{Extra graphical parameters, passed to the original plot and the individual calls to \code{lines} or \code{barchar}.}
   \item{data}{This argument is only required when \code{x} doesn't contain any fits that provide the data which is required for the "fit" \code{type} option.  Default is NA as most of the time this is likely not required.}
 }
@@ -22,6 +23,8 @@ Uses the output of the \code{envcpt} function and plots optionally ("fit") the o
   If \code{type="fit"}, the function plots the data at the bottom and stacks the different fits for the 8 models from the \code{\link{envcpt}} function on top.  No scale is given as all data and fits are scaled to be in (0,1).  This is designed as an initial visualization tool for the fits only.
   If \code{type="aic"} the function uses the \code{\link{AIC.envcpt}} function to calculate the AIC values for the \code{envcpt} output \code{x}.  Then barcharts the AIC values in the same order as the \code{type="fit"} option.  The minimum AIC is the preferred model and this is highlight by a solid block.  This is designed as an initial visualization tool for the AIC values only.
   If \code{type="bic"} the function uses the \code{\link{BIC.envcpt}} function to calculate the BIC values for the \code{envcpt} output \code{x}.  Then barcharts the BIC values in the same order as the \code{type="fit"} option.  The minimum BIC is the preferred model and this is highlight by a solid block.  This is designed as an initial visualization tool for the BIC values only.
+  
+  For ease of use, if "colours" is specified instead of (or in addition to) colors then this will take precedence.
 }
 \value{
   Returns the printed graphic to the active device.

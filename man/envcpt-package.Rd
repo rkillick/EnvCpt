@@ -12,8 +12,8 @@ Tools for automatic model selection and diagnostics for Climate and Environmenta
 \tabular{ll}{
 Package: \tab EnvCpt\cr
 Type: \tab Package\cr
-Version: \tab 1.1.2 \cr
-Date: \tab 2020-06-21\cr
+Version: \tab 1.1.3 \cr
+Date: \tab 2021-03-29\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
 }

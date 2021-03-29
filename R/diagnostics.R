@@ -44,12 +44,19 @@ BIC.envcpt = function(object,...){
 
 
 
-plot.envcpt=function(x,type=c('fit','bic','aic'),lwd=3,...,data=NA){
+plot.envcpt=function(x,type=c('fit','bic','aic'),lwd=3,colors=rainbow(12),...,data=NA){
   if(class(x)!="envcpt"){stop("x must be an object with class envcpt")}
-  colors=rainbow(12)
-
   extra.args=list(...)
-  
+  if(is.null(extra.args$colours)==FALSE){colors=extra.args$colours}
+  if(length(colors)<12){stop("colors must be a vector of length 12 (even if not all models have been fit).")}
+  areColors=function(x) {
+    sapply(x, function(X) {
+      tryCatch(is.matrix(col2rgb(X)), 
+               error = function(e) FALSE)
+    })
+  }
+  if(any(areColors(colors)==FALSE)){stop("Atleast one of your colours is not resolvable by col2rgb.")}
+
   models=which(!is.na(x[[1]][1,]))
   reorder=c(1,3,4,7,9,10,2,5,6,8,11,12)
   reorder.index=c(1,7,2,3,8,9,4,10,5,6,11,12)[models]
