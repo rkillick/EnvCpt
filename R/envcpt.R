@@ -8,13 +8,17 @@ envcpt=function(data,models=c("mean","meancpt","meanar1","meanar2","meanar1cpt",
   if(verbose==TRUE){
     message("Fitting ",length(models)," models")
     pb <- txtProgressBar(min = 0, max =length(models), style = 3)
+    done=0
   }
   # mean 
   if(any(models=="mean")|any(models==1)){
     mean.fit=fitdistr(data,densfun='normal')# function from MASS
     mean.loglik=-2*mean.fit$loglik 
     # literally the loglikelihood so need to do -2*
-    if(verbose==TRUE){setTxtProgressBar(pb, 1)}
+    if(verbose==TRUE){
+      done=done+1
+      setTxtProgressBar(pb, done)
+    }
   }
   else(mean.fit=mean.loglik=NA)
 
@@ -23,7 +27,10 @@ envcpt=function(data,models=c("mean","meancpt","meanar1","meanar2","meanar1cpt",
     meancpt.fit=cpt.meanvar(data,method='PELT',minseglen=minseglen,...) # default MBIC penalty
     meancpt.loglik=logLik(meancpt.fit)[1] # function from changepoint
     # gives -2*loglik
-    if(verbose==TRUE){setTxtProgressBar(pb, 2)}
+    if(verbose==TRUE){
+      done=done+1
+      setTxtProgressBar(pb, done)
+    }
   }
   else{meancpt.fit=new("cpt");meancpt.loglik=NA}
   
@@ -36,7 +43,10 @@ envcpt=function(data,models=c("mean","meancpt","meanar1","meanar2","meanar1cpt",
     }
     else{meanar.loglik=-2*logLik(meanar.fit)}
     # again this gives loglikelihood so need to do -2*
-    if(verbose==TRUE){setTxtProgressBar(pb, 3)}
+    if(verbose==TRUE){
+      done=done+1
+      setTxtProgressBar(pb, done)
+    }
   }
   else{meanar.fit=meanar.loglik=NA}
   
@@ -49,7 +59,10 @@ envcpt=function(data,models=c("mean","meancpt","meanar1","meanar2","meanar1cpt",
     }
     else{meanar2.loglik=-2*logLik(meanar2.fit)}
     # again this gives loglikelihood so need to do -2*
-    if(verbose==TRUE){setTxtProgressBar(pb, 4)}
+    if(verbose==TRUE){
+      done=done+1
+      setTxtProgressBar(pb, done)
+    }
   }
   else{meanar2.fit=meanar2.loglik=NA}
 
@@ -66,7 +79,10 @@ envcpt=function(data,models=c("mean","meancpt","meanar1","meanar2","meanar1cpt",
       # gives -2*log likelihood
     }
     # replace with faster version (maybe trimmed version of auto.arima instead of lm)
-    if(verbose==TRUE){setTxtProgressBar(pb, 5)}
+    if(verbose==TRUE){
+      done=done+1
+      setTxtProgressBar(pb, done)
+    }
   }
   else{meanarcpt.fit=new("cpt");meanarcpt.loglik=NA}
   
@@ -83,7 +99,10 @@ envcpt=function(data,models=c("mean","meancpt","meanar1","meanar2","meanar1cpt",
       # gives -2*log likelihood
     }
     # replace with faster version (maybe trimmed version of auto.arima instead of lm)
-    if(verbose==TRUE){setTxtProgressBar(pb, 6)}
+    if(verbose==TRUE){
+      done=done+1
+      setTxtProgressBar(pb, done)
+    }
   }
   else{meanar2cpt.fit=new("cpt");meanar2cpt.loglik=NA}
 
@@ -92,7 +111,10 @@ envcpt=function(data,models=c("mean","meancpt","meanar1","meanar2","meanar1cpt",
     trend.fit=lm(data~c(1:n)) # function from stats
     trend.loglik=-2*logLik(trend.fit)
     # again this gives loglikelihood so need to do -2*
-    if(verbose==TRUE){setTxtProgressBar(pb, 7)}
+    if(verbose==TRUE){
+      done=done+1
+      setTxtProgressBar(pb, done)
+    }
   }
   else{trend.fit=trend.loglik=NA}
   
@@ -107,7 +129,10 @@ envcpt=function(data,models=c("mean","meancpt","meanar1","meanar2","meanar1cpt",
       trendcpt.loglik=logLik(trendcpt.fit)[1] # function from changepoint
       # gives -2*log likelihood
     }
-    if(verbose==TRUE){setTxtProgressBar(pb, 8)}
+    if(verbose==TRUE){
+      done=done+1
+      setTxtProgressBar(pb, done)
+    }
   }
   else{trendcpt.fit=new("cpt");trendcpt.loglik=NA}
   
@@ -116,7 +141,10 @@ envcpt=function(data,models=c("mean","meancpt","meanar1","meanar2","meanar1cpt",
     trendar.fit=lm(data[-1]~c(1:(n-1))+data[-n]) # function from stats
     trendar.loglik=-2*logLik(trendar.fit)
     # again this gives loglikelihood so need to do -2*
-    if(verbose==TRUE){setTxtProgressBar(pb, 9)}
+    if(verbose==TRUE){
+      done=done+1
+      setTxtProgressBar(pb, done)
+    }
   }
   else{trendar.fit=trendar.loglik=NA}
 
@@ -125,7 +153,10 @@ envcpt=function(data,models=c("mean","meancpt","meanar1","meanar2","meanar1cpt",
     trendar2.fit=lm(data[-c(1:2)]~c(1:(n-2))+data[2:(n-1)]+data[1:(n-2)]) # function from stats
     trendar2.loglik=-2*logLik(trendar2.fit)
     # again this gives loglikelihood so need to do -2*
-    if(verbose==TRUE){setTxtProgressBar(pb, 10)}
+    if(verbose==TRUE){
+      done=done+1
+      setTxtProgressBar(pb, done)
+    }
   }
   else{trendar2.fit=trendar2.loglik=NA}
   
@@ -142,7 +173,10 @@ envcpt=function(data,models=c("mean","meancpt","meanar1","meanar2","meanar1cpt",
       # gives -2*log likelihood
     }
     # replace with faster version, maybe trimmed auto.arima instead of lm
-    if(verbose==TRUE){setTxtProgressBar(pb, 11)}
+    if(verbose==TRUE){
+      done=done+1
+      setTxtProgressBar(pb, done)
+    }
   }
   else{trendarcpt.fit=new("cpt");trendarcpt.loglik=NA}
 
@@ -159,7 +193,10 @@ envcpt=function(data,models=c("mean","meancpt","meanar1","meanar2","meanar1cpt",
       # gives -2*log likelihood
     }
     # replace with faster version, maybe trimmed auto.arima instead of lm
-    if(verbose==TRUE){setTxtProgressBar(pb, 12)}
+    if(verbose==TRUE){
+      done=done+1
+      setTxtProgressBar(pb, done)
+    }
   }
   else{trendar2cpt.fit=new("cpt");trendar2cpt.loglik=NA}
   
