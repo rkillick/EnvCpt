@@ -1,5 +1,5 @@
 AIC.envcpt = function(object,...,k=2){
-  if(class(object)!="envcpt"){stop("object must be of class envcpt")}
+  if(!is(object,"envcpt")){stop("object must be of class envcpt")}
   if(!is.list(object)){stop("object argument must be a list")}
   if(!is.matrix(object[[1]])){stop("first element in the object list must be a matrix.")}
   if(any(!is.numeric(object[[1]][c(1:2),]),na.rm=TRUE)){stop("First two rows in matrix in first element of object list must be numeric")}
@@ -23,7 +23,7 @@ AICweights.envcpt=function(object){
 
 
 BIC.envcpt = function(object,...){
-  if(class(object)!="envcpt"){stop("object must be of class envcpt")}
+  if(!is(object,"envcpt")){stop("object must be of class envcpt")}
   if(!is.list(object)){stop("object argument must be a list")}
   if(!is.matrix(object[[1]])){stop("first element in the object list must be a matrix.")}
   if(any(!is.numeric(object[[1]][c(1:2),]),na.rm=TRUE)){stop("First two rows in matrix in first element of object list must be numeric")}
@@ -45,7 +45,7 @@ BIC.envcpt = function(object,...){
 
 
 plot.envcpt=function(x,type=c('fit','bic','aic'),lwd=3,colors=rainbow(12),...,data=NA){
-  if(class(x)!="envcpt"){stop("x must be an object with class envcpt")}
+  if(!is(x,"envcpt")){stop("x must be an object with class envcpt")}
   extra.args=list(...)
   if(is.null(extra.args$colours)==FALSE){colors=extra.args$colours}
   if(length(colors)<12){stop("colors must be a vector of length 12 (even if not all models have been fit).")}

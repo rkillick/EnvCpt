@@ -1,26 +1,28 @@
+Version 1.1.5
+=============
+* Updated \linkS4class in documentation to be anchored for CRAN check
+
+Version 1.1.4
+=============
+* Minor updates for changes to CRAN checks
+* Updated reference for J. Climate paper
+* Update tests for compatibility with new v2.3 of changepoint package dependency
+
 Version 1.1.3
 =============
-Changes to previous version
-
 * Added colours as a plotting argument to allow users to specify their own colours for the diagnostic plots.  Thanks to Paul Prew for the suggestion.
 * Fixed bug on progress bar which incorrectly reported progress when a subset of models are considered
 
 Version 1.1.2
 =============
-Changes to previous version
-
 * Fixed bug in the plot function that meant that the fit was calculated for each model as "scaled data - residuals" instead of "data-residuals".  This bug crept in version 1.1 when the subset code was added.  Thanks to Claudie Beaulieu and collaborators for spotting it.
 
 Version 1.1.1
 =============
-Changes to previous version
-
 * Fixed bug in envcpt function that meant that if a non-changepoint model was not specified in the list of models to fit, and no changepoints were detected in the changepoint model then the log-likelihood was recorded in the output as NA instead of the value fitted.
 
 Version 1.1
 ===========
-Changes to previous version
-
 * Added option to envcpt to choose a subset of models to run.
 * The subset selection also follows through to plotting whereby only the models fitted are plotted.
 * BIC method added.
@@ -31,8 +33,6 @@ Changes to previous version
 
 Version 1.0
 =============
-Changes to previous version
-
 * Coding for cpt.reg has been implemented in C.
 * Changepoints in normal linear regression takes advantage of the Fortran dqrls command that is called with lm.fit. As such, potential multicollinearity is appropriately managed.
 * cpt.reg is available for any number of regressors.
@@ -40,14 +40,10 @@ Changes to previous version
 
 Version 0.1.1
 =============
-Changes to previous version
-
 * Did corrections for CRAN submission.
 * Corrected plot(.,type='aic') to do the correct axis drawing when yaxt is specified.
 * Added man page for the package.
 
-Version 0.1: Original
-
-Rebecca Killick
-Lancaster University
-www.lancs.ac.uk/~killick
+Version 0.1
+===========
+* Original

@@ -5,7 +5,7 @@ cpt.reg <- function(data, penalty="MBIC", pen.value=0, method="AMOC", dist="Norm
   if(!is.array(data) || !is.numeric(data))  ##Further checks applied later
     stop("Argument 'data' must be a numerical matrix/array.")
   if(!is.character(penalty) || length(penalty)>1)
-    stop("Argument 'penelty' is invalid.")
+    stop("Argument 'penalty' is invalid.")
     #value of 'penalty' & 'pen.value' checked within changepoint::penalty_decision
   if(!is.character(method) || length(method)>1)
     stop("Argument 'method' is invalid.") 

@@ -12,8 +12,8 @@ Tools for automatic model selection and diagnostics for Climate and Environmenta
 \tabular{ll}{
 Package: \tab EnvCpt\cr
 Type: \tab Package\cr
-Version: \tab 1.1.3 \cr
-Date: \tab 2021-03-29\cr
+Version: \tab 1.1.5 \cr
+Date: \tab 2025-04-13\cr
 License: \tab GPL\cr
 LazyLoad: \tab yes\cr
 }
@@ -26,7 +26,7 @@ Maintainer: Rebecca Killick <r.killick@lancs.ac.uk>
 }
 
 \references{
-EnvCpt Algorithm: Beaulieu, C, Killick, R (2018+) Distinguishing trends and shifts from memory in climate data. 
+EnvCpt Algorithm: Beaulieu, C, Killick, R (2018) Distinguishing trends and shifts from memory in climate data, \emph{Journal of Climate} \bold{31(23)}, 9519--9543
 
 PELT Algorithm: Killick R, Fearnhead P, Eckley IA (2012) Optimal detection of changepoints with a linear computational cost, \emph{JASA} \bold{107(500)}, 1590--1598
 }

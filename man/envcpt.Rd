@@ -48,7 +48,7 @@ verbose=TRUE)
   Elements 2-13 of the list are the fits for each individual model, these are the direct output from the respective functions so see the individual functions for formats.  The first model fit is in element 2 and the twelth model fit is in element 13, but are named for convenience.
 }
 \references{
-EnvCpt Algorithm: Beaulieu, C, Killick, R (2018+) Distinguishing trends and shifts from memory in climate data. 
+EnvCpt Algorithm: Beaulieu, C, Killick, R (2018) Distinguishing trends and shifts from memory in climate data, \emph{Journal of Climate} \bold{31(23)}, 9519--9543
 
 PELT Algorithm: Killick R, Fearnhead P, Eckley IA (2012) Optimal detection of changepoints with a linear computational cost, \emph{JASA} \bold{107(500)}, 1590--1598
 
@@ -60,7 +60,7 @@ Rebecca Killick
 
 
 \seealso{
-\code{\link[changepoint]{cpt.meanvar}},\code{\link[changepoint]{plot-methods}},\code{\linkS4class{cpt}}, \code{\link{plot.envcpt}}
+\code{\link[changepoint]{cpt.meanvar}},\code{\link[changepoint]{plot-methods}},\code{\link[changepoint:cpt-class]{cpt}}, \code{\link{plot.envcpt}}
 }
 \examples{
 \dontrun{
