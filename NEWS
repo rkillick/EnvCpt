@@ -1,3 +1,7 @@
+Version 1.2
+===========
+* Added skip functionality argument for use in larger datasets, default is 0.
+
 Version 1.1.5
 =============
 * Updated \linkS4class in documentation to be anchored for CRAN check

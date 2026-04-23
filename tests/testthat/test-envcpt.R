@@ -41,4 +41,11 @@ minseglens <- c(1,5,100)
 # }
 
 
+# skip test
+set.seed(1)
+x=c(rnorm(100,0,1),rnorm(100,5,1))
+out=envcpt(x,models="trendar1cpt",skip=12) # run all models with default values
+test_that("envcptskip",expect_equivalent(cpts(out$trendar1cpt),c(91,117)))
+
+
 

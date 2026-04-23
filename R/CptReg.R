@@ -1,5 +1,5 @@
 cpt.reg <- function(data, penalty="MBIC", pen.value=0, method="AMOC", dist="Normal",
-  class=TRUE, param.estimates=TRUE, minseglen=3, shape = 0, tol = 1e-07){
+  class=TRUE, param.estimates=TRUE, minseglen=3, skip=0, shape = 0, tol = 1e-07){
   MBIC=0
   ##Check arguments are valid
   if(!is.array(data) || !is.numeric(data))  ##Further checks applied later
@@ -25,6 +25,8 @@ cpt.reg <- function(data, penalty="MBIC", pen.value=0, method="AMOC", dist="Norm
     stop("Argument 'minseglen' is invalid.")
   if(minseglen <= 0 || minseglen%%1 != 0) ##Further checks applied later
     stop("Argument 'minseglen' must be positive integer.")
+  if(skip < 0 || skip%%1 != 0)
+    stop("Argument 'skip' must be positive integer.")
   if(!is.numeric(tol) || length(tol)!=1)
     stop("Argument 'tol' is invalid.")
   if(tol<0) stop("Argument 'tol' must be positive.")
@@ -55,8 +57,8 @@ cpt.reg <- function(data, penalty="MBIC", pen.value=0, method="AMOC", dist="Norm
     }
 
     CPTS <- ChangepointRegression(data=datai, penalty=penalty,
-      penalty.value=pen.value, method=method, dist=dist, minseglen=minseglen,
-      shape = shape, tol=tol, cpts.only=class, MBIC=MBIC)
+      penalty.value=pen.value, method=method, dist=dist, minseglen=minseglen, 
+      skip=skip, shape = shape, tol=tol, cpts.only=class, MBIC=MBIC)
 
     if(class){
       #Convert to cpt.reg object
@@ -77,7 +79,7 @@ cpt.reg <- function(data, penalty="MBIC", pen.value=0, method="AMOC", dist="Norm
     }
   }
 
-  ##Return result, only first case if there is only a singe data set
+  ##Return result, only first case if there is only a single data set
   if(dim(data)[1]==1){ return(ans[[1]]) }else{ return(ans) }  
 }
 
@@ -111,14 +113,14 @@ check_data <- function(data, minseglen=3){
   
 
 ChangepointRegression <- function(data, penalty="MBIC", penalty.value=0,
-  method="AMOC", dist="Normal", minseglen=3, cpts.only=TRUE, shape=0, MBIC=0, tol=1e-07){
+  method="AMOC", dist="Normal", minseglen=3, skip=0, cpts.only=TRUE, shape=0, MBIC=0, tol=1e-07){
   ##Assume all input arguments are entered correctly
   if(!is.logical(cpts.only) && length(cpts.only)>1)
     stop("Argument 'cpts.only' is invalid.")
   if(method=="AMOC" && dist=="Normal"){
     out <- CptReg_AMOC_Normal(data, penalty, penalty.value, minseglen, shape, MBIC, tol)
   }else if(method=="PELT" && dist=="Normal"){
-    out <- CptReg_PELT_Normal(data, penalty.value, minseglen, shape,MBIC, tol)
+    out <- CptReg_PELT_Normal(data, penalty.value, minseglen, skip, shape,MBIC, tol)
   }else{
     stop("Changepoint in regression method not recognised.")
   }
@@ -161,7 +163,7 @@ CptReg_AMOC_Normal <- function(data, penalty="MBIC", penalty.value=0, minseglen=
   return(out)  #return list of cpts & pen.value
 }
 
-CptReg_PELT_Normal <- function(data, penalty.value=0, minseglen=3, shape=0, 
+CptReg_PELT_Normal <- function(data, penalty.value=0, minseglen=3, skip=0, shape=0, 
   MBIC=0, tol=1e-07){
   n <- as.integer(nrow(data))
   p <- as.integer(ncol(data)-1)
@@ -170,15 +172,19 @@ CptReg_PELT_Normal <- function(data, penalty.value=0, minseglen=3, shape=0,
   if(!is.numeric(shape) || length(shape)!=1)
     stop("Argument 'shape' is invalid.")
   
-  #Check if error has occured
+  # minseglen needs to be a multiple of skip+1 as that is the distance we are testing for cpts
+  # so we round to the nearest multiple of (skip+1)
+  if(skip!=0){minseglen=ceiling(minseglen/(skip+1))*(skip+1)}
+  
+  #Check if error has occurred
   answer=list()
   answer[[6]]=1
   on.exit(.C("Free_CptReg_Normal_PELT",answer[[6]],PACKAGE="EnvCpt"))
 
   answer <- .C("CptReg_Normal_PELT", data=as.double(data), n=n,
     m=as.integer(p+1), pen=as.double(penalty.value), cpt=vector("integer",n),
-    err=0L, shape=as.double(shape), minseglen=as.integer(minseglen), 
-    tol=as.double(tol), lastchangelike=vector("double",n+1), 
+    err=0L, shape=as.double(shape), minseglen=as.integer(minseglen),
+    skip=as.integer(skip), tol=as.double(tol), lastchangelike=vector("double",n+1), 
     lastchangecpts=vector("integer",n+1), numchangecpts=vector("integer",n+1), 
     MBIC=as.integer(MBIC), PACKAGE="EnvCpt")
 

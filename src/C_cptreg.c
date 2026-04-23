@@ -246,7 +246,7 @@ void min_which(double *data, int *n, double *minval, int *minid){
 
 //Determine cpts for Normal regression under method PELT
 void CptReg_Normal_PELT(double *data, int *n, int *m, double *pen, int *cptsout,
-  int *error, double *shape, int *minseglen, double *tol, double *lastchangelike,
+  int *error, double *shape, int *minseglen, int *skip, double *tol, double *lastchangelike,
   int *lastchangecpts, int *numchangecpts, int *MBIC){
 
   //data           - vectorised matrix of size n x m
@@ -257,6 +257,7 @@ void CptReg_Normal_PELT(double *data, int *n, int *m, double *pen, int *cptsout,
   //error          - Index stating if an error has occured (error=0 if ok)
   //shape          - known variance (if=0,use MLE, if<0, cost=RSS)
   //minseglen      - minimum segment length
+  //skip           - intended for larger datasets, tau consideration will skip
   //lastchangelike - working space (cost value at last changepoint)
   //lastchangecpts - working space (index of last changepoint)
   //numchangecpts  - working space (number of cpts that have occured so far)
@@ -321,9 +322,12 @@ void CptReg_Normal_PELT(double *data, int *n, int *m, double *pen, int *cptsout,
   checklist[1] = *minseglen+1;
 
   //progress through time series
-  for(tstar = 2 * *minseglen+1; tstar < np1; tstar++){
-    R_CheckUserInterrupt(); //Has interrupred the R session? quits if true.
-
+  for(tstar = 2 * *minseglen+*skip+1; tstar < (np1+*skip); tstar+=*skip+1){
+    R_CheckUserInterrupt(); //Has interrupted the R session? quits if true.
+    if(tstar> *n){
+      tstar=*n; // check if gone past the end of the data with the skip
+    }
+    
     if(lastchangelike[tstar] == 0){  //Should always be true!
       for(i = 0; i < nchecklist; i++){
         //Evaluate cost&penalty based on 
